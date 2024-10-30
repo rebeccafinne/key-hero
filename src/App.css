@@ -1,0 +1,37 @@
+.App {
+  display: grid;
+  grid-template-areas: ". title ." ". game controls";
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.controls {
+  grid-area: controls;
+}
+
+h1{
+  text-align: center;
+  grid-area: title
+}
+
+.board {
+  border: 2px solid black;
+  user-select: none;
+  width: fit-content;
+  margin: auto;
+  grid-area: game;
+}
+
+.row {
+  display: flex;
+}
+
+.cell{
+  border: 1px dotted rebeccapurple;
+  width: 50px;
+  height: 50px;
+  aspect-ratio: 1;
+}
+
+.cell-empty {
+  background-color: beige;
+}
