@@ -8,7 +8,7 @@ import {
   BoardShape,
 } from '../types/types';
 
-export function useKeyHeroBoard(): [GameState, Dispatch<Action>] {
+export const useKeyHeroBoard = (): [GameState, Dispatch<Action>] => {
   const [boardState, dispatchBoardState] = useReducer(
     boardReducer,
     {
@@ -21,6 +21,7 @@ export function useKeyHeroBoard(): [GameState, Dispatch<Action>] {
       ],
       points: 0,
       misses: 0,
+      keyPressed: false,
     },
 
     (emptyState) => {
@@ -32,14 +33,14 @@ export function useKeyHeroBoard(): [GameState, Dispatch<Action>] {
     }
   );
   return [boardState, dispatchBoardState];
-}
+};
 
-export function getRandomKey(): Keys {
+const getRandomKey = (): Keys => {
   const keyValues = Object.values(Keys);
   return keyValues[Math.floor(Math.random() * keyValues.length)] as Keys;
-}
+};
 
-export function getEmptyBoard() {
+const getEmptyBoard = () => {
   const emptyRow: Row = [
     EmptyCell.EMPTY,
     EmptyCell.EMPTY,
@@ -49,9 +50,9 @@ export function getEmptyBoard() {
   const board: BoardShape = Array(10).fill(emptyRow);
 
   return board;
-}
+};
 
-function getNewRow(newKey: Keys): Row {
+const getNewRow = (newKey: Keys): Row => {
   switch (newKey) {
     case Keys.LEFT:
       return [Keys.LEFT, EmptyCell.EMPTY, EmptyCell.EMPTY, EmptyCell.EMPTY];
@@ -69,17 +70,28 @@ function getNewRow(newKey: Keys): Row {
         EmptyCell.EMPTY,
       ];
   }
-}
+};
 
-function calcPoints(newState: GameState, index: number, keyPressed: Keys) {
+const calcPoints = (newState: GameState, index: number, keyPressed: Keys) => {
   if (newState.lastRow[index] === keyPressed) {
     newState.points++;
   } else {
     newState.misses++;
   }
-}
+};
 
-function boardReducer(state: GameState, action: Action): GameState {
+const updateBoard = (newState: GameState) => {
+  const newKey = getRandomKey();
+  const newRow = getNewRow(newKey);
+  const newBoard = [
+    newRow,
+    ...newState.board.slice(0, newState.board.length - 1),
+  ];
+  newState.board = newBoard;
+  newState.lastRow = newState.board[newState.board.length - 1];
+};
+
+const boardReducer = (state: GameState, action: Action): GameState => {
   let newState = { ...state };
 
   switch (action.type) {
@@ -90,30 +102,37 @@ function boardReducer(state: GameState, action: Action): GameState {
         lastRow: emptyBoard[emptyBoard.length - 1],
         points: 0,
         misses: 0,
+        keyPressed: false,
       };
     }
     case 'drop': {
-      const newKey = getRandomKey();
-      const newRow = getNewRow(newKey);
-      const newBoard = [
-        newRow,
-        ...newState.board.slice(0, newState.board.length - 1),
-      ];
-      newState.board = newBoard;
-      newState.lastRow = newState.board[newState.board.length - 1];
+      if (
+        !newState.keyPressed &&
+        !newState.lastRow.every((cell) => cell === EmptyCell.EMPTY)
+      ) {
+        newState.misses++;
+      }
+      updateBoard(newState);
+      newState.keyPressed = false;
       break;
     }
     case 'key-press-left':
       calcPoints(newState, 0, Keys.LEFT);
+      newState.keyPressed = true;
       break;
     case 'key-press-up':
       calcPoints(newState, 1, Keys.UP);
+      newState.keyPressed = true;
+
       break;
     case 'key-press-down':
       calcPoints(newState, 2, Keys.DOWN);
+      newState.keyPressed = true;
+
       break;
     case 'key-press-right':
       calcPoints(newState, 3, Keys.RIGHT);
+      newState.keyPressed = true;
       break;
     default: {
       const unhandledType: never = action.type;
@@ -122,4 +141,4 @@ function boardReducer(state: GameState, action: Action): GameState {
   }
 
   return newState;
-}
+};

@@ -27,6 +27,7 @@ export type GameState = {
   lastRow: Row;
   points: number;
   misses: number;
+  keyPressed: boolean;
 };
 
 export type Action = {
