@@ -1,6 +1,7 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useInterval } from './useInterval';
 import { useKeyHeroBoard } from './useKeyHeroBoard';
+import { ClickedKeyOptions } from '../types/types';
 
 enum TickSpeed {
   Normal = 800,
@@ -8,10 +9,12 @@ enum TickSpeed {
 
 export function useKeyHero() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
   const [tickSpeed, setTickSpeed] = useState<TickSpeed | null>(null);
+  const [clickedKey, setClickedKey] = useState<ClickedKeyOptions>('');
+  const [showMissed, setShowMissed] = useState(false);
 
-  const [{ board, lastRow, points, misses }, dispatchBoardState] =
-    useKeyHeroBoard();
+  const [{ board, points, misses }, dispatchBoardState] = useKeyHeroBoard();
 
   const startGame = useCallback(() => {
     setIsPlaying(true);
@@ -27,16 +30,35 @@ export function useKeyHero() {
     window.removeEventListener('keydown', handleKeyClick);
   };
 
+  const resetGame = () => {
+    setIsGameOver(false);
+    setClickedKey('');
+    setShowMissed(false);
+    startGame();
+  };
+
   const gameTick = useCallback(() => {
+    setClickedKey('');
+    setShowMissed(false);
     dispatchBoardState({ type: 'drop' });
   }, [dispatchBoardState]);
 
   useInterval(() => {
-    if (!isPlaying) {
+    if (!isPlaying || isGameOver) {
       return;
     }
     gameTick();
   }, tickSpeed);
+
+  useEffect(() => {
+    if (misses > 0) {
+      setShowMissed(true);
+    }
+    if (misses >= 10) {
+      setIsGameOver(true);
+      stopGame();
+    }
+  }, [misses]);
 
   const handleKeyClick = (event: KeyboardEvent) => {
     if (event.repeat) {
@@ -44,15 +66,22 @@ export function useKeyHero() {
     }
     switch (event.key) {
       case 'ArrowLeft':
+        setClickedKey('left');
         dispatchBoardState({ type: 'key-press-left' });
         break;
       case 'ArrowUp':
+        setClickedKey('up');
+
         dispatchBoardState({ type: 'key-press-up' });
         break;
       case 'ArrowDown':
+        setClickedKey('down');
+
         dispatchBoardState({ type: 'key-press-down' });
         break;
-      case 'ArrowRiht':
+      case 'ArrowRight':
+        setClickedKey('right');
+
         dispatchBoardState({ type: 'key-press-right' });
         break;
       default:
@@ -67,5 +96,9 @@ export function useKeyHero() {
     stopGame,
     points,
     misses,
+    clickedKey,
+    showMissed,
+    isGameOver,
+    resetGame,
   };
 }

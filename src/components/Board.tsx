@@ -1,11 +1,13 @@
-import { BoardShape } from '../types/types';
+import { BoardShape, ClickedKeyOptions } from '../types/types';
 import { Cell } from './Cell';
+import { LastRow } from './LastRow';
 
 interface BoardProps {
   currentBoard: BoardShape;
+  clickedKey: ClickedKeyOptions;
 }
 
-export const Board = ({ currentBoard }: BoardProps) => {
+export const Board = ({ currentBoard, clickedKey }: BoardProps) => {
   return (
     <div className="board">
       {currentBoard.map((row, rowIndex) => (
@@ -15,6 +17,7 @@ export const Board = ({ currentBoard }: BoardProps) => {
           ))}
         </div>
       ))}
+      <LastRow clickedKey={clickedKey} />
     </div>
   );
 };

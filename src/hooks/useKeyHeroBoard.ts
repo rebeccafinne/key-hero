@@ -94,7 +94,6 @@ function boardReducer(state: GameState, action: Action): GameState {
     }
     case 'drop': {
       const newKey = getRandomKey();
-
       const newRow = getNewRow(newKey);
       const newBoard = [
         newRow,

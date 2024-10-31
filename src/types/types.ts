@@ -38,3 +38,5 @@ export type Action = {
     | 'key-press-down'
     | 'key-press-right';
 };
+
+export type ClickedKeyOptions = 'left' | 'up' | 'down' | 'right' | '';

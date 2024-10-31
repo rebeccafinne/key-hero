@@ -1,6 +1,6 @@
 .App {
   display: grid;
-  grid-template-areas: ". title ." ". game controls";
+  grid-template-areas: ". title ." "feedback game controls";
   grid-template-columns: repeat(3, 1fr);
 }
 
@@ -19,14 +19,16 @@ h1{
   width: fit-content;
   margin: auto;
   grid-area: game;
+  z-index: 2;
+  position: relative;
 }
 
 .row {
   display: flex;
+  position: relative;
 }
 
 .cell{
-  border: 1px dotted rebeccapurple;
   width: 50px;
   height: 50px;
   aspect-ratio: 1;
@@ -35,3 +37,81 @@ h1{
 .cell-empty {
   background-color: beige;
 }
+
+.static-last-row {
+  opacity: 0.33;
+  border: 1px solid black;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+}
+
+.cell-clicked {
+      animation: highligtClick 0.5s forwards;
+    }
+  
+@keyframes highligtClick {
+  0% {
+    box-shadow: 0 0 5px #7a585e;  
+  }
+  
+  100% {
+    box-shadow: none;
+  }
+}
+
+.miss {
+  grid-area: feedback;
+  animation-name: miss;
+  animation-duration: 0.8s;
+  animation-fill-mode: forwards;
+  justify-self: center;
+  position: relative;
+  transform-origin: top;
+}
+
+@keyframes miss {
+  0% {
+    display: none;
+    text-shadow: none;
+    transform: translateY(0) scale(0);
+  }
+  50%{
+    text-shadow: 0 0 5px #7a585e;
+    transform: translateY(50px) scale(2);    
+  }
+  100% {
+    text-shadow: none;
+    transform: translateY(100px) scale(0);
+  }
+}
+
+/* Modal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Grå bakgrund med transparens */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 250px;
+}
+
