@@ -1,3 +1,7 @@
+body {
+  background-color: #14141f;
+}
+
 .App {
   display: grid;
   grid-template-areas: ". title ." "feedback game controls";
@@ -6,15 +10,45 @@
 
 .controls {
   grid-area: controls;
+  color: #f0f0f5;
+  background-color: #52527a;
+  border: 2px solid #666699;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50%;
+  border-radius: 5px;
+}
+
+.controls-button {
+  width: fit-content;
+  background-color: #14141f;
+  border: none;
+  border-radius: 5px;
+  color: #f0f0f5;
+  padding: 15px 50px 15px 50px;
+}
+
+.controls-button:hover {
+  /* box-shadow: 5px 5px rgba(0, 0, 0, 0.2); */
+  scale: 1.1;
 }
 
 h1{
   text-align: center;
-  grid-area: title
+  grid-area: title;
+  color: #f0f0f5;
+}
+
+p {
+  margin-bottom: 1rem;
 }
 
 .board {
-  border: 2px solid black;
+  border: 2px solid #666699;
+  border-top: none;
+  border-radius: 5px;
   user-select: none;
   width: fit-content;
   margin: auto;
@@ -35,12 +69,12 @@ h1{
 }
 
 .cell-empty {
-  background-color: beige;
+  background-color: #8585ad;
 }
 
 .static-last-row {
   opacity: 0.33;
-  border: 1px solid black;
+  border: 1px solid 666699;
   z-index: 1;
   position: absolute;
   bottom: 0;
@@ -63,6 +97,30 @@ h1{
   }
 }
 
+.fall-down {
+  animation-name: fall-down;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+
+@keyframes fall-down {
+  0% {
+    transform: translateY(-40px)
+  }
+ 
+  100% {
+    transform: translateY(10px);
+   
+  }
+  
+}
+
+.hidden {
+  display: none;
+}
+
 .miss {
   grid-area: feedback;
   animation-name: miss;
@@ -71,6 +129,7 @@ h1{
   justify-self: center;
   position: relative;
   transform-origin: top;
+  color: #f0f0f5;
 }
 
 @keyframes miss {
@@ -104,8 +163,9 @@ h1{
 }
 
 .modal-content {
-  background: white;
-  padding: 20px;
+  background: #52527a;
+  color: #f0f0f5;
+  padding: 30px 50px 30px 50px;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;

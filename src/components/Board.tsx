@@ -1,6 +1,7 @@
 import { BoardShape, ClickedKeyOptions } from '../types/types';
 import { Cell } from './Cell';
 import { LastRow } from './LastRow';
+import { v4 as uuidv4 } from 'uuid';
 
 interface BoardProps {
   currentBoard: BoardShape;
@@ -12,8 +13,8 @@ export const Board = ({ currentBoard, clickedKey }: BoardProps) => {
     <div className="board">
       {currentBoard.map((row, rowIndex) => (
         <div className="row" key={rowIndex}>
-          {row.map((cell, cellIndex) => (
-            <Cell key={`${rowIndex}-${cellIndex}`} type={cell} />
+          {row.map((cell) => (
+            <Cell key={uuidv4()} type={cell} />
           ))}
         </div>
       ))}

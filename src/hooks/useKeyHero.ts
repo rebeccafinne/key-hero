@@ -4,7 +4,7 @@ import { useKeyHeroBoard } from './useKeyHeroBoard';
 import { ClickedKeyOptions } from '../types/types';
 
 enum TickSpeed {
-  Normal = 800,
+  Normal = 1000,
 }
 
 export function useKeyHero() {

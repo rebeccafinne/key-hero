@@ -18,12 +18,15 @@ export const Cell = ({ type }: CellProps) => {
       break;
     case Keys.DOWN:
       imageSrc = down;
+
       break;
     case Keys.LEFT:
       imageSrc = left;
+
       break;
     case Keys.UP:
       imageSrc = up;
+
       break;
     default:
       imageSrc = '';
@@ -35,8 +38,9 @@ export const Cell = ({ type }: CellProps) => {
         <img
           src={`${imageSrc}`}
           alt={`${type.toString().toLowerCase()} arrow`}
+          className={'fall-down'}
         />
-      )}{' '}
+      )}
     </div>
   );
 };
