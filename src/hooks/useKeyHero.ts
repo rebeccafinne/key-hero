@@ -1,14 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useInterval } from './useInterval';
 import { useKeyHeroBoard } from './useKeyHeroBoard';
-import { ClickedKeyOptions } from '../types/types';
-
-enum TickSpeed {
-  Normal = 1000,
-}
+import { ClickedKeyOptions, TickSpeed } from '../types/types';
 
 export function useKeyHero() {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [tickSpeed, setTickSpeed] = useState<TickSpeed | null>(null);
   const [clickedKey, setClickedKey] = useState<ClickedKeyOptions>('');
@@ -17,7 +12,7 @@ export function useKeyHero() {
   const [{ board, points, misses }, dispatchBoardState] = useKeyHeroBoard();
 
   const startGame = useCallback(() => {
-    setIsPlaying(true);
+    setIsGameOver(false);
     setTickSpeed(TickSpeed.Normal);
     window.addEventListener('keydown', handleKeyClick);
 
@@ -25,16 +20,17 @@ export function useKeyHero() {
   }, [dispatchBoardState]);
 
   const stopGame = () => {
-    setIsPlaying(false);
     setTickSpeed(null);
     window.removeEventListener('keydown', handleKeyClick);
   };
 
-  const resetGame = () => {
+  const resetGame = (newGame: boolean) => {
     setIsGameOver(false);
     setClickedKey('');
     setShowMissed(false);
-    startGame();
+    if (newGame) {
+      startGame();
+    }
   };
 
   const gameTick = useCallback(() => {
@@ -44,7 +40,7 @@ export function useKeyHero() {
   }, [dispatchBoardState]);
 
   useInterval(() => {
-    if (!isPlaying || isGameOver) {
+    if (isGameOver) {
       return;
     }
     gameTick();
@@ -92,7 +88,6 @@ export function useKeyHero() {
   return {
     board,
     startGame,
-    isPlaying,
     stopGame,
     points,
     misses,
@@ -100,5 +95,6 @@ export function useKeyHero() {
     showMissed,
     isGameOver,
     resetGame,
+    setTickSpeed,
   };
 }

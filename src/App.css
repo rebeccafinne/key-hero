@@ -4,8 +4,34 @@ body {
 
 .App {
   display: grid;
-  grid-template-areas: ". title ." "feedback game controls";
+  grid-template-areas: "feedback game controls";
   grid-template-columns: repeat(3, 1fr);
+  margin-top: 20px;
+}
+
+.header-container {
+  display: grid;
+  grid-template-areas: "back title .";
+  grid-template-columns: repeat(3, 1fr);
+}
+
+
+button {
+  border: none;
+  border-radius: 5px;
+  color: #f0f0f5;
+  margin-top: 20px;
+  padding: 15px 50px 15px 50px;
+  width: -webkit-fill-available;
+
+}
+
+button:hover {
+  scale: 1.1;
+}
+
+.button-container {
+  width: 180px;
 }
 
 .controls {
@@ -19,21 +45,32 @@ body {
   justify-content: center;
   height: 50%;
   border-radius: 5px;
+  margin-right: 20px;
 }
 
-.controls-button {
-  width: fit-content;
+.dark-button {
   background-color: #14141f;
-  border: none;
-  border-radius: 5px;
-  color: #f0f0f5;
-  padding: 15px 50px 15px 50px;
 }
 
-.controls-button:hover {
-  /* box-shadow: 5px 5px rgba(0, 0, 0, 0.2); */
-  scale: 1.1;
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+.light-button {
+    background-color: #52527a;
+
+}
+
+.back-button {
+  background-color: transparent;
+  font-size: large;
+  grid-area: back;
+  padding: 0;
+  margin: 20px 0 20px 0;
+}
+
 
 h1{
   text-align: center;
@@ -43,6 +80,14 @@ h1{
 
 p {
   margin-bottom: 1rem;
+}
+
+
+.how-to-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #f0f0f5;
 }
 
 .board {

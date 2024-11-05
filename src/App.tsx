@@ -1,48 +1,67 @@
+import { useState } from 'react';
 import './App.css';
-import { Board } from './components/Board';
-import { Modal } from './components/Modal';
+import { Game } from './components/Game';
+import { MainMenu } from './components/MainMenu';
 import { useKeyHero } from './hooks/useKeyHero';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { LevelPicker } from './components/LevelPicker';
+import { HowToPlay } from './components/HowToPlay';
 
 function App() {
+  const handleStartGame = () => {
+    startGame();
+  };
+
   const {
-    board,
     startGame,
-    isPlaying,
-    stopGame,
+    board,
     points,
     misses,
     clickedKey,
     showMissed,
     isGameOver,
     resetGame,
+    setTickSpeed,
   } = useKeyHero();
 
+  const handleBackToMenu = () => {
+    resetGame(false);
+  };
+
   return (
-    <div className="App">
-      <h1>Key-Hero!</h1>
-      <Modal isOpen={isGameOver}>
-        <h2>Game over!</h2>
-        <p>Score: {points}</p>
-        <button onClick={resetGame} className="controls-button">
-          Retry
-        </button>
-      </Modal>
-      {showMissed && <h2 className="miss">Miss!</h2>}
-      <Board currentBoard={board} clickedKey={clickedKey} />
-      <div className="controls">
-        <p>Score: {points}</p>
-        <p>Misses: {misses}/10</p>
-        {isPlaying ? (
-          <button onClick={stopGame} className="controls-button">
-            Stop
-          </button>
-        ) : (
-          <button onClick={startGame} className="controls-button">
-            New Game
-          </button>
-        )}
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <MainMenu
+              startGame={handleStartGame}
+              setDifficultyLevel={() => console.log('hanterar nivå')}
+            />
+          }
+        />
+        <Route
+          path="/game"
+          element={
+            <Game
+              board={board}
+              points={points}
+              misses={misses}
+              clickedKey={clickedKey}
+              showMissed={showMissed}
+              isGameOver={isGameOver}
+              resetGame={resetGame}
+              backToMenu={handleBackToMenu}
+            />
+          }
+        />
+        <Route
+          path="/level"
+          element={<LevelPicker setTickSpeed={setTickSpeed} />}
+        />
+        <Route path="/how-to-play" element={<HowToPlay />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -9,6 +9,13 @@ export enum EmptyCell {
   EMPTY = 'empty',
 }
 
+export enum TickSpeed {
+  Easy = 1500,
+  Normal = 1000,
+  Hard = 800,
+  Extreme = 500,
+}
+
 export type CellOptions = Keys | EmptyCell;
 
 // Definiera specifika typer för varje kolumn
