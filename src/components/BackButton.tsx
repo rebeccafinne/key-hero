@@ -1,11 +1,15 @@
-import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
 import { FaChevronLeft } from 'react-icons/fa';
+import { GameContext } from '../context/GameContext';
+import { CurrentPage } from '../types/types';
 
 export const BackButton = () => {
-  const navigate = useNavigate();
+  const context = useContext(GameContext);
+
+  const { setCurrentPage } = context;
 
   const handleBackClick = () => {
-    navigate(-1);
+    setCurrentPage(CurrentPage.MAIN_MENU);
   };
 
   return (

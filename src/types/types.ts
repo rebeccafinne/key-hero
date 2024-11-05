@@ -16,6 +16,13 @@ export enum TickSpeed {
   Extreme = 500,
 }
 
+export enum CurrentPage {
+  MAIN_MENU = 'MAIN_MENU',
+  GAME = 'GAME',
+  LEVEL_PICK = 'LEVEL_PICK',
+  HOW_TO = 'HOW_TO',
+}
+
 export type CellOptions = Keys | EmptyCell;
 
 // Definiera specifika typer för varje kolumn

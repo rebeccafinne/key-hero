@@ -1,9 +1,19 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useInterval } from './useInterval';
 import { useKeyHeroBoard } from './useKeyHeroBoard';
 import { ClickedKeyOptions, TickSpeed } from '../types/types';
+import { GameContext } from '../context/GameContext';
 
 export function useKeyHero() {
+  const context = useContext(GameContext);
+
+  if (!context) {
+    throw new Error(
+      'DisplayCurrentLevel must be used within a CurrentLevelContext.Provider'
+    );
+  }
+  const { currentLevel } = context;
+
   const [isGameOver, setIsGameOver] = useState(false);
   const [tickSpeed, setTickSpeed] = useState<TickSpeed | null>(null);
   const [clickedKey, setClickedKey] = useState<ClickedKeyOptions>('');
@@ -13,11 +23,11 @@ export function useKeyHero() {
 
   const startGame = useCallback(() => {
     setIsGameOver(false);
-    setTickSpeed(TickSpeed.Normal);
+    setTickSpeed(currentLevel);
     window.addEventListener('keydown', handleKeyClick);
 
     dispatchBoardState({ type: 'start' });
-  }, [dispatchBoardState]);
+  }, [dispatchBoardState, currentLevel]);
 
   const stopGame = () => {
     setTickSpeed(null);
@@ -81,14 +91,12 @@ export function useKeyHero() {
         dispatchBoardState({ type: 'key-press-right' });
         break;
       default:
-        console.log('Must press an arrow key to play');
     }
   };
 
   return {
     board,
     startGame,
-    stopGame,
     points,
     misses,
     clickedKey,

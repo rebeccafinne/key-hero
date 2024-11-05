@@ -106,7 +106,6 @@ const boardReducer = (state: GameState, action: Action): GameState => {
       };
     }
     case 'drop': {
-      console.log('in drop actions');
       if (
         !newState.keyPressed &&
         !newState.lastRow.every((cell) => cell === EmptyCell.EMPTY)

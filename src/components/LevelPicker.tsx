@@ -1,14 +1,33 @@
+import { useContext } from 'react';
 import { TickSpeed } from '../types/types';
 import { Header } from './Header';
+import { GameContext } from '../context/GameContext';
 
-type LevelPickerProps = {
-  setTickSpeed: (tickspeed: TickSpeed) => void;
-};
+export const LevelPicker = () => {
+  const context = useContext(GameContext);
 
-export const LevelPicker = ({ setTickSpeed }: LevelPickerProps) => {
+  if (!context) {
+    throw new Error(
+      'DisplayCurrentLevel must be used within a CurrentLevelContext.Provider'
+    );
+  }
+  const { setCurrentLevel } = context;
+
   const setDifficultyLevel = (value: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(value.target.value);
-    setTickSpeed(value.target.value);
+    switch (value.target.value) {
+      case 'Easy':
+        setCurrentLevel(TickSpeed.Easy);
+        break;
+      case 'Medium':
+        setCurrentLevel(TickSpeed.Normal);
+        break;
+      case 'Hard':
+        setCurrentLevel(TickSpeed.Hard);
+        break;
+      case 'Extreme':
+        setCurrentLevel(TickSpeed.Extreme);
+        break;
+    }
   };
   return (
     <>

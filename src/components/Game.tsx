@@ -1,8 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-import { BoardShape, ClickedKeyOptions } from '../types/types';
 import { Board } from './Board';
 import { Modal } from './Modal';
 import { Header } from './Header';
+import { BoardShape, ClickedKeyOptions } from '../types/types';
 
 type GameProps = {
   board: BoardShape;
@@ -11,8 +10,8 @@ type GameProps = {
   clickedKey: ClickedKeyOptions;
   showMissed: boolean;
   isGameOver: boolean;
-  resetGame: (newGame: boolean) => void;
-  backToMenu: () => void;
+  resetGame: (startNewGame: boolean) => void;
+  backToMenu: (event: unknown) => void;
 };
 
 export const Game = ({
@@ -25,11 +24,8 @@ export const Game = ({
   resetGame,
   backToMenu,
 }: GameProps) => {
-  const navigate = useNavigate();
-
   const handleBackToMenu = () => {
-    navigate('/');
-    backToMenu();
+    backToMenu('MAIN');
   };
   return (
     <>
