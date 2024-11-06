@@ -1,6 +1,6 @@
 import { Header } from './Header';
 import { useKeyHero } from '../hooks/useKeyHero';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { CurrentPage } from '../types/types';
 import { Game } from './Game';
 import { HowToPlay } from './HowToPlay';
@@ -86,7 +86,6 @@ export const MainMenu = () => {
           showMissed={showMissed}
           isGameOver={isGameOver}
           resetGame={resetGame}
-          backToMenu={handleNavigation}
         />
       )}
       {currentPage === CurrentPage.HOW_TO && <HowToPlay />}

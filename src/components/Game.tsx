@@ -1,7 +1,9 @@
 import { Board } from './Board';
 import { Modal } from './Modal';
 import { Header } from './Header';
-import { BoardShape, ClickedKeyOptions } from '../types/types';
+import { BoardShape, ClickedKeyOptions, CurrentPage } from '../types/types';
+import { useContext } from 'react';
+import { GameContext } from '../context/GameContext';
 
 type GameProps = {
   board: BoardShape;
@@ -11,7 +13,6 @@ type GameProps = {
   showMissed: boolean;
   isGameOver: boolean;
   resetGame: (startNewGame: boolean) => void;
-  backToMenu: (event: unknown) => void;
 };
 
 export const Game = ({
@@ -22,11 +23,15 @@ export const Game = ({
   showMissed,
   isGameOver,
   resetGame,
-  backToMenu,
 }: GameProps) => {
+  const context = useContext(GameContext);
+
+  const { setCurrentPage } = context;
+
   const handleBackToMenu = () => {
-    backToMenu('MAIN');
+    setCurrentPage(CurrentPage.MAIN_MENU);
   };
+
   return (
     <>
       <Header title="Key-Hero!" />

@@ -38,7 +38,6 @@ export const Cell = ({ type }: CellProps) => {
         <img
           src={`${imageSrc}`}
           alt={`${type.toString().toLowerCase()} arrow`}
-          className={'fall-down'}
         />
       )}
     </div>

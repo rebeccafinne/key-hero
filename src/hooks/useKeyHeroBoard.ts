@@ -133,6 +133,7 @@ const boardReducer = (state: GameState, action: Action): GameState => {
     case 'key-press-right':
       calcPoints(newState, 3, Keys.RIGHT);
       newState.keyPressed = true;
+
       break;
     default: {
       const unhandledType: never = action.type;

@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { TickSpeed } from '../types/types';
 import { Header } from './Header';
 import { GameContext } from '../context/GameContext';
+import toast from 'react-hot-toast';
 
 export const LevelPicker = () => {
   const context = useContext(GameContext);
@@ -28,7 +29,18 @@ export const LevelPicker = () => {
         setCurrentLevel(TickSpeed.Extreme);
         break;
     }
+
+    toast.success(`Level changed to ${value.target.value}`, {
+      style: {
+        padding: '16px',
+        color: '#f0f0f5',
+        backgroundColor: '#14141f',
+        border: ' 2px solid #666699',
+      },
+      icon: '',
+    });
   };
+
   return (
     <>
       <Header title="Pick a difficulty level" />

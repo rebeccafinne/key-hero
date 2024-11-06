@@ -142,12 +142,13 @@ p {
   }
 }
 
-.fall-down {
+/* .fall-down {
   animation-name: fall-down;
   animation-duration: 1s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-}
+  animation-play-state: ${({isPaused})=>(isPaused ? 'paused' : 'running')};
+} */
 
 
 @keyframes fall-down {

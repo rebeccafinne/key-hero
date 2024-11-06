@@ -4,6 +4,7 @@ import { MainMenu } from './components/MainMenu';
 
 import { CurrentPage, TickSpeed } from './types/types';
 import { GameContext } from './context/GameContext';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const [currentLevel, setCurrentLevel] = useState<TickSpeed>(TickSpeed.Normal);
@@ -15,6 +16,7 @@ function App() {
     <GameContext.Provider
       value={{ currentLevel, setCurrentLevel, currentPage, setCurrentPage }}
     >
+      <Toaster />
       <MainMenu />
     </GameContext.Provider>
   );
