@@ -23,13 +23,13 @@ export const MainMenu = () => {
     resetGame,
   } = useKeyHero();
 
-  const handleStartGame = (event) => {
+  const handleStartGame = (event: React.MouseEvent<HTMLButtonElement>) => {
     handleNavigation(event);
     startGame();
   };
 
-  const handleNavigation = (event) => {
-    switch (event.target.value) {
+  const handleNavigation = (event: React.MouseEvent<HTMLButtonElement>) => {
+    switch ((event.target as HTMLInputElement).value) {
       case 'game':
         setCurrentPage(CurrentPage.GAME);
         break;

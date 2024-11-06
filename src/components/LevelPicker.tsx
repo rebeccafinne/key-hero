@@ -15,7 +15,7 @@ export const LevelPicker = () => {
   const { setCurrentLevel } = context;
 
   const setDifficultyLevel = (value: React.MouseEvent<HTMLButtonElement>) => {
-    switch (value.target.value) {
+    switch ((value.target as HTMLInputElement).value) {
       case 'Easy':
         setCurrentLevel(TickSpeed.Easy);
         break;
@@ -30,15 +30,18 @@ export const LevelPicker = () => {
         break;
     }
 
-    toast.success(`Level changed to ${value.target.value}`, {
-      style: {
-        padding: '16px',
-        color: '#f0f0f5',
-        backgroundColor: '#14141f',
-        border: ' 2px solid #666699',
-      },
-      icon: '',
-    });
+    toast.success(
+      `Level changed to ${(value.target as HTMLInputElement).value}`,
+      {
+        style: {
+          padding: '16px',
+          color: '#f0f0f5',
+          backgroundColor: '#14141f',
+          border: ' 2px solid #666699',
+        },
+        icon: '',
+      }
+    );
   };
 
   return (
