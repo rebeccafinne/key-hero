@@ -21,6 +21,7 @@ export enum CurrentPage {
   GAME = 'GAME',
   LEVEL_PICK = 'LEVEL_PICK',
   HOW_TO = 'HOW_TO',
+  CREDITS = 'CREDITS',
 }
 
 export type CellOptions = Keys | EmptyCell;
