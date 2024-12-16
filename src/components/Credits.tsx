@@ -1,16 +1,13 @@
 import { Header } from './Header';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
+import mePic from '../assets/Rebecca_square.jpg';
 
 export const Credits = () => {
   return (
     <>
       <Header title="Credits" />
       <div className="page-container">
-        <img
-          src="src/assets/Rebecca_square.jpg"
-          width="200"
-          className="round-img"
-        />
+        <img src={mePic} width="200" className="round-img" />
         <p>This game is made by Rebecca Finne.</p>
         <p>Fullstack software engineer.</p>
         <p>Reach out to me!</p>
