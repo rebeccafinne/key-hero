@@ -5,7 +5,7 @@
   "type": "module",
   "homepage": "https://rebeccafinne.github.io/key-hero/",
   "scripts": {
-    "deploy": "vite-plugin-gh-pages",
+    "deploy": "vite build && vite-plugin-gh-pages",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
